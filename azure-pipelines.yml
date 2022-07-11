@@ -1,0 +1,42 @@
+trigger:
+  branches:
+    include:
+      - main
+      - releases/*
+  tags:
+    include:
+      - v*
+
+stages:
+- stage: check
+  jobs:
+  - job: check
+    trigger:
+      - main
+    pool:
+      image: ubuntu-latest
+    steps:
+    - task: Gradle@2
+      displayName: run gradle check
+      inputs:
+        javaHomeOption: 'JDKVersion'
+        jdkVersionOption: '1.8'
+        tasks: 'check'
+- stage: publish
+  condition: and(succeeded(), startsWith(variables['build.sourceBranch'], 'refs/tags/v')
+  jobs:
+  - job: publish
+    pool:
+      image: ubuntu-latest
+    steps:
+    - task: Gradle@2
+      displayName: Publish package to OSSRH
+      inputs:
+        javaHomeOption: 'JDKVersion'
+        jdkVersionOption: '1.8'
+        tasks: 'publishToSonatype'
+      env:
+        ORG_GRADLE_PROJECT_signingKey: $( secrets_GPG_SECRET_KEY )
+        ORG_GRADLE_PROJECT_signingPassword: $( secrets_GPG_KEY_PASSPHARASE )
+        SONATYPE_USER: $( secrets_SONATYPE_USER )
+        SONATYPE_PASS: $( secrets_SONATYPE_PASS )
