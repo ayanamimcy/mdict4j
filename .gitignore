@@ -32,3 +32,6 @@ version.properties
 
 # python cache
 __pycache__
+
+# Maven signature
+secring.gpg
