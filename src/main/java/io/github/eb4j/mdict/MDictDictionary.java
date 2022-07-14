@@ -30,7 +30,10 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.Duration;
 import java.util.AbstractMap;
 import java.util.ArrayList;
@@ -307,23 +310,19 @@ public class MDictDictionary {
      */
     private static byte[] loadDictionaryKey(final String mdxFile) {
         String dictName = getBaseName(mdxFile);
-        File keyFile = new File(dictName + ".key");
-        if (!keyFile.isFile() || !keyFile.canRead()) {
+        Path keyFile = Paths.get(dictName + ".key");
+        if (!keyFile.toFile().isFile() || !keyFile.toFile().canRead()) {
             return null;
         }
-        Optional<String> first;
-        try (Stream<String> lines = Files.lines(keyFile.toPath())) {
-            if (lines == null) {
-                return null;
-            }
-            first = lines.findFirst();
+        try {
+            Optional<String> first = Files.readAllLines(keyFile, StandardCharsets.UTF_8).stream().findFirst();
             if (first.isPresent()) {
                 byte[] keydata = new byte[16];
                 byte[] temp = Hex.decode(first.get().substring(0, 32));
                 System.arraycopy(temp, 0, keydata, 0, 16);
                 return keydata;
             }
-        } catch (IOException ignored) {
+        } catch (IOException ignore) {
         }
         return null;
     }
