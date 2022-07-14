@@ -40,7 +40,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Stream;
 import java.util.zip.DataFormatException;
 
 public class MDictDictionary {
@@ -138,7 +137,7 @@ public class MDictDictionary {
         return styleSheet;
     }
 
-    public List<Map.Entry<String, String>> readArticlesPredictive(String word) throws MDException {
+    public List<Map.Entry<String, String>> readArticlesPredictive(final String word) throws MDException {
         if (!mdx) {
             throw new MDException("Can not retrieve text data from MDD file.");
         }
