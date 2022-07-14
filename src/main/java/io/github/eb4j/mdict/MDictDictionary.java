@@ -36,6 +36,7 @@ import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Stream;
 import java.util.zip.DataFormatException;
 
@@ -302,27 +303,27 @@ public class MDictDictionary {
     /**
      * parse dictionary.key file and return 128-bit regcode.
      * @param mdxFile dictionary file path.
-     * @return byte[] password data
+     * @return byte[] password data, or null when error occurred
      */
     private static byte[] loadDictionaryKey(final String mdxFile) {
         String dictName = getBaseName(mdxFile);
         File keyFile = new File(dictName + ".key");
-        if (keyFile.canRead()) {
-            try {
-                byte[] keydata = new byte[16];
-                if (keyFile.isFile() && keyFile.canRead()) {
-                    try (Stream<String> lines = Files.lines(keyFile.toPath())) {
-                        String first = lines.findFirst().orElse(null);
-                        if (first != null) {
-                            first = first.substring(0, 32);
-                            byte[] temp = Hex.decode(first);
-                            System.arraycopy(temp, 0, keydata, 0, 16);
-                        }
-                    }
-                }
-                return keydata;
-            } catch (IOException ignored) {
+        if (!keyFile.isFile() || !keyFile.canRead()) {
+            return null;
+        }
+        Optional<String> first;
+        try (Stream<String> lines = Files.lines(keyFile.toPath())) {
+            if (lines == null) {
+                return null;
             }
+            first = lines.findFirst();
+            if (first.isPresent()) {
+                byte[] keydata = new byte[16];
+                byte[] temp = Hex.decode(first.get().substring(0, 32));
+                System.arraycopy(temp, 0, keydata, 0, 16);
+                return keydata;
+            }
+        } catch (IOException ignored) {
         }
         return null;
     }
