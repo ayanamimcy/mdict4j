@@ -1,4 +1,3 @@
-import java.io.File
 import java.io.FileInputStream
 import java.util.Properties
 
@@ -18,7 +17,7 @@ plugins {
     id("kr.motd.sphinx") version "2.10.1"
 }
 
-group = "io.github.eb4j"
+group = "tokyo.northside"
 
 repositories {
     mavenCentral()
@@ -102,7 +101,7 @@ if (dotgit.exists()) {
                 pom {
                     name.set("URL protocol handler")
                     description.set("MDict parser for java")
-                    url.set("https://github.com/eb4j/mdict4j")
+                    url.set("https://codeberg.org/miurahr/mdict4j")
                     licenses {
                         license {
                             name.set("The GNU General Public License, Version 3")
@@ -118,9 +117,9 @@ if (dotgit.exists()) {
                         }
                     }
                     scm {
-                        connection.set("scm:git:git://github.com/eb4j/mdict4j.git")
-                        developerConnection.set("scm:git:git://github.com/eb4j/mdict4j.git")
-                        url.set("https://github.com/eb4j/mdict4j")
+                        connection.set("scm:git:git://codeberg.org/miurahr/mdict4j.git")
+                        developerConnection.set("scm:git:git://codeberg.org/miurahr/mdict4j.git")
+                        url.set("https://codeberg.org/miurahr/mdict4j")
                     }
                 }
             }

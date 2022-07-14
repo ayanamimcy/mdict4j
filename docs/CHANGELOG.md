@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+* Change group id to "tokyo.northside"
+
 ## [0.3.1]
 * Fix public method name typo
   * change main load method name MDictDictionary#loadDictionary

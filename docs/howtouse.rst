@@ -9,8 +9,14 @@ When you use gradle for build system, you can install mdict4j from mavenCentral.
 .. code-block:: gradle
 
     dependencies {
-        implementation 'io.github.eb4j:mdict4j:0.3.0'
+        implementation 'tokyo.northside:mdict4j:0.4.0'
     }
+
+.. note:
+
+We changed groupId from version 0.4.0. If you want to use old versions,
+please use group id 'io.github.eb4j'
+
 
 Loading dictionary file
 ------------------------
