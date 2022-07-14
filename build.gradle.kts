@@ -81,7 +81,7 @@ java {
 // we handle cases without .git directory
 val home = System.getProperty("user.home")
 val javaHome = System.getProperty("java.home")
-val props = project.file("src/main/resources/version.properties")
+val propVersion = project.file("src/main/resources/version.properties")
 val dotgit = project.file(".git")
 
 if (dotgit.exists()) {
@@ -132,14 +132,17 @@ if (dotgit.exists()) {
             val signingKey: String? by project
             val signingPassword: String? by project
             useInMemoryPgpKeys(signingKey, signingPassword)
-        } else {
+        } else if (!project.hasProperty("signing.keyId")) {
+            // set signing.secretKeyRingFile as
+            // gpg --export-secret-keys > secring.gpg
+            // otherwise when both property does not set use gpg command
             useGpgCmd()
         }
         sign(publishing.publications["mavenJava"])
     }
 
     tasks.withType<Sign> {
-        val hasKey = project.hasProperty("signingKey") || project.hasProperty("signing.gnupg.keyName")
+        val hasKey = project.hasProperty("signingKey") || project.hasProperty("signing.gnupg.keyName") || project.hasProperty("signing.keyId")
         onlyIf { hasKey && details.isCleanTag }
     }
 
@@ -148,24 +151,14 @@ if (dotgit.exists()) {
             sonatype {
                 nexusUrl.set(uri("https://s01.oss.sonatype.org/service/local/"))
                 snapshotRepositoryUrl.set(uri("https://s01.oss.sonatype.org/content/repositories/snapshots/"))
-                username.set(System.getenv("SONATYPE_USER"))
-                password.set(System.getenv("SONATYPE_PASS"))
             }
         }
     }
-} else if (props.exists()) { // when version.properties already exist, just use it.
-
-    fun getProps(f: File): Properties {
-        val props = Properties()
-        try {
-            props.load(FileInputStream(f))
-        } catch (t: Throwable) {
-            println("Can't read $f: $t, assuming empty")
-        }
-        return props
+} else if (propVersion.exists()) { // when version.properties already exist, just use it.
+    version = Properties().also {
+        it.load(FileInputStream(propVersion))
+        it.getProperty("version")
     }
-
-    version = getProps(props).getProperty("version")
 }
 
 tasks.register("writeVersionFile") {
@@ -173,8 +166,8 @@ tasks.register("writeVersionFile") {
     if (!folder.exists()) {
         folder.mkdirs()
     }
-    props.delete()
-    props.appendText("version=" + project.version)
+    propVersion.delete()
+    propVersion.appendText("version=" + project.version)
 }
 
 tasks.getByName("jar") {
