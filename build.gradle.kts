@@ -80,7 +80,7 @@ java {
 // we handle cases without .git directory
 val home = System.getProperty("user.home")
 val javaHome = System.getProperty("java.home")
-val propVersion = project.file("src/main/resources/version.properties")
+val versionProperties = project.file("src/main/resources/version.properties")
 val dotgit = project.file(".git")
 
 if (dotgit.exists()) {
@@ -126,43 +126,38 @@ if (dotgit.exists()) {
         }
     }
 
+    val signKey = listOf("signingKey", "signing.keyId", "signing.gnupg.keyName").find {project.hasProperty(it)}
+    tasks.withType<Sign> {
+        onlyIf { details.isCleanTag && (signKey != null) }
+    }
+
     signing {
-        if (project.hasProperty("signingKey")) {
-            val signingKey: String? by project
-            val signingPassword: String? by project
-            useInMemoryPgpKeys(signingKey, signingPassword)
-        } else if (project.hasProperty("signing.keyId")) {
-            // set signing.secretKeyRingFile as
-            // gpg --export-secret-keys > secring.gpg
-            val keyId: String? by project
-            val password: String? by project
-            val secretKeyRingFile: String? by project
-            useInMemoryPgpKeys(keyId, password, secretKeyRingFile)
-        } else {
-            // otherwise when both property does not set use gpg command
-            useGpgCmd()
+        when (signKey) {
+            "signingKey" -> {
+                val signingKey: String? by project
+                val signingPassword: String? by project
+                useInMemoryPgpKeys(signingKey, signingPassword)
+            }
+            "signing.keyId" -> {
+                val keyId: String? by project
+                val password: String? by project
+                val secretKeyRingFile: String? by project // e.g. gpg --export-secret-keys > secring.gpg
+                useInMemoryPgpKeys(keyId, password, secretKeyRingFile)
+            }
+            "signing.gnupg.keyName" -> {
+                useGpgCmd()
+            }
         }
         sign(publishing.publications["mavenJava"])
     }
 
-    tasks.withType<Sign> {
-        val hasKey = project.hasProperty("signingKey") || project.hasProperty("signing.gnupg.keyName") || project.hasProperty("signing.keyId")
-        // onlyIf { hasKey && details.isCleanTag }
-    }
-
     nexusPublishing {
-        repositories {
-            sonatype {
-                // nexusUrl.set(uri("https://s01.oss.sonatype.org/service/local/"))
-                // snapshotRepositoryUrl.set(uri("https://s01.oss.sonatype.org/content/repositories/snapshots/"))
-            }
+        repositories{
+            sonatype()
         }
     }
-} else if (propVersion.exists()) { // when version.properties already exist, just use it.
-    version = Properties().also {
-        it.load(FileInputStream(propVersion))
-        it.getProperty("version")
-    }
+} else if (versionProperties.exists()) {
+    version = Properties().apply { load(FileInputStream(versionProperties)) }.getProperty("version")
 }
 
 tasks.register("writeVersionFile") {
@@ -170,8 +165,8 @@ tasks.register("writeVersionFile") {
     if (!folder.exists()) {
         folder.mkdirs()
     }
-    propVersion.delete()
-    propVersion.appendText("version=" + project.version)
+    versionProperties.delete()
+    versionProperties.appendText("version=" + project.version)
 }
 
 tasks.getByName("jar") {
