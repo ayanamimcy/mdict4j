@@ -3,6 +3,7 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [0.4.0]
 * Change group id to "tokyo.northside"
 
 ## [0.3.1]
@@ -72,7 +73,8 @@ All notable changes to this project will be documented in this file.
 ## 0.1.0
 * First internal release
 
-[Unreleased]: https://github.com/eb4j/mdict4j/compare/v0.3.1...HEAD
+[Unreleased]: https://github.com/eb4j/mdict4j/compare/v0.4.0...HEAD
+[0.4.0]: https://github.com/eb4j/mdict4j/compare/v0.3.1...v0.4.0
 [0.3.1]: https://github.com/eb4j/mdict4j/compare/v0.3.0...v0.3.1
 [0.3.0]: https://github.com/eb4j/mdict4j/compare/v0.2.4...v0.3.0
 [0.2.4]: https://github.com/eb4j/mdict4j/compare/v0.2.3...v0.2.4
