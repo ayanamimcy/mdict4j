@@ -36,7 +36,7 @@ jobs:
     - task: Gradle@3
       displayName: 'gradlew publishToSonatype'
       inputs:
-        options: '-Psigning.keyId=$(GPG_SIGNING_KEYID) -Psigning.password=$(GPG_SIGNING_PASSPHRASE) -PsonatypeUsername=$(SONATYPE_USER) -PsonatypePassword=$(SONATYPE_PASSWORD)'
+        options: '-Psigning.keyId=$(GPG_SIGNING_KEYID)  -Psigning.password=$(GPG_SIGNING_PASSPHRASE) -Psigning.secretKeyRingFile=$(secring.secureFilePath) -PsonatypeUsername=$(SONATYPE_USER) -PsonatypePassword=$(SONATYPE_PASSWORD)'
         tasks: publishToSonatype
         publishJUnitResults: false
         jdkVersionOption: '$(Parameters.jdkVersion)'
