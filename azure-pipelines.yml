@@ -2,12 +2,12 @@ trigger:
   branches:
     include:
       - main
-      - releases/*
   tags:
     include:
       - v*
 
 pool:
+  name: Azure Pipelines
   image: ubuntu-latest
 
 jobs:
@@ -34,10 +34,10 @@ jobs:
       inputs:
         secureFile: secring.gpg
     - task: Gradle@3
-      displayName: 'gradlew publishSonaType'
+      displayName: 'gradlew publishToSonatype'
       inputs:
         options: '-Psigning.password=$(GPG_SIGNING_PASSPHRASE) -PsonatypeUsername=$(SONATYPE_USER) -PsonatypePassword=$(SONATYPE_PASSWORD)'
-        tasks: publishSonaType
+        tasks: publishToSonatype
         publishJUnitResults: false
         jdkVersionOption: '$(Parameters.jdkVersion)'
       condition: and(succeeded(), startsWith(variables['build.sourceBranch'], 'refs/tags/v'))
