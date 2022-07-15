@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+* Docs: Add .readthedocs.yaml document build configuration file
+* Docs: Fix language configuration
+* Docs: Update dependency MyST-Parser to support Markdown
+* CI: fix publish task configuration
+
 ## [0.4.0]
 * Change group id to "tokyo.northside"
 
