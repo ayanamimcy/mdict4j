@@ -131,9 +131,14 @@ if (dotgit.exists()) {
             val signingKey: String? by project
             val signingPassword: String? by project
             useInMemoryPgpKeys(signingKey, signingPassword)
-        } else if (!project.hasProperty("signing.keyId")) {
+        } else if (project.hasProperty("signing.keyId")) {
             // set signing.secretKeyRingFile as
             // gpg --export-secret-keys > secring.gpg
+            val keyId: String? by project
+            val password: String? by project
+            val secretKeyRingFile: String? by project
+            useInMemoryPgpKeys(keyId, password, secretKeyRingFile)
+        } else {
             // otherwise when both property does not set use gpg command
             useGpgCmd()
         }
@@ -142,7 +147,7 @@ if (dotgit.exists()) {
 
     tasks.withType<Sign> {
         val hasKey = project.hasProperty("signingKey") || project.hasProperty("signing.gnupg.keyName") || project.hasProperty("signing.keyId")
-        onlyIf { hasKey && details.isCleanTag }
+        // onlyIf { hasKey && details.isCleanTag }
     }
 
     nexusPublishing {
