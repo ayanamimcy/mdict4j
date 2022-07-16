@@ -3,10 +3,12 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [0.4.2]
+
 * Docs: Add .readthedocs.yaml document build configuration file
 * Docs: Fix language configuration
 * Docs: Update dependency MyST-Parser to support Markdown
-* CI: fix publish task configuration
+* Docs: Fix changelog links
 
 ## [0.4.0]
 * Change group id to "tokyo.northside"
@@ -78,14 +80,15 @@ All notable changes to this project will be documented in this file.
 ## 0.1.0
 * First internal release
 
-[Unreleased]: https://github.com/eb4j/mdict4j/compare/v0.4.0...HEAD
-[0.4.0]: https://github.com/eb4j/mdict4j/compare/v0.3.1...v0.4.0
-[0.3.1]: https://github.com/eb4j/mdict4j/compare/v0.3.0...v0.3.1
-[0.3.0]: https://github.com/eb4j/mdict4j/compare/v0.2.4...v0.3.0
-[0.2.4]: https://github.com/eb4j/mdict4j/compare/v0.2.3...v0.2.4
-[0.2.3]: https://github.com/eb4j/mdict4j/compare/v0.2.2...v0.2.3
-[0.2.2]: https://github.com/eb4j/mdict4j/compare/v0.2.1...v0.2.2
-[0.2.1]: https://github.com/eb4j/mdict4j/compare/v0.2.0...v0.2.1
-[0.2.0]: https://github.com/eb4j/mdict4j/compare/v0.1.4...v0.2.0
-[0.1.4]: https://github.com/eb4j/mdict4j/compare/v0.1.3...v0.1.4
-[0.1.3]: https://github.com/eb4j/mdict4j/compare/v0.1.2...v0.1.3
+[Unreleased]: https://codeberg.org/miurahr/mdict4j/compare/v0.4.2...HEAD
+[0.4.2]: https://codeberg.org/miurahr/mdict4j/compare/v0.4.0...v0.4.2
+[0.4.0]: https://codeberg.org/miurahr/mdict4j/compare/v0.3.1...v0.4.0
+[0.3.1]: https://codeberg.org/miurahr/mdict4j/compare/v0.3.0...v0.3.1
+[0.3.0]: https://codeberg.org/miurahr/mdict4j/compare/v0.2.4...v0.3.0
+[0.2.4]: https://codeberg.org/miurahr/mdict4j/compare/v0.2.3...v0.2.4
+[0.2.3]: https://codeberg.org/miurahr/mdict4j/compare/v0.2.2...v0.2.3
+[0.2.2]: https://codeberg.org/miurahr/mdict4j/compare/v0.2.1...v0.2.2
+[0.2.1]: https://codeberg.org/miurahr/mdict4j/compare/v0.2.0...v0.2.1
+[0.2.0]: https://codeberg.org/miurahr/mdict4j/compare/v0.1.4...v0.2.0
+[0.1.4]: https://codeberg.org/miurahr/mdict4j/compare/v0.1.3...v0.1.4
+[0.1.3]: https://codeberg.org/miurahr/mdict4j/compare/v0.1.2...v0.1.3
