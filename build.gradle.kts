@@ -139,10 +139,12 @@ if (dotgit.exists()) {
                 useInMemoryPgpKeys(signingKey, signingPassword)
             }
             "signing.keyId" -> {
-                val keyId: String? by project
-                val password: String? by project
-                val secretKeyRingFile: String? by project // e.g. gpg --export-secret-keys > secring.gpg
-                useInMemoryPgpKeys(keyId, password, secretKeyRingFile)
+                // default signatory - do nothing()
+                // please set
+                // signing.keyId = 0xAAAAAA
+                // signing.password = "signature passphrase"
+                // secretKeyRingFile = "secring.gpg"
+                // e.g. gpg --export-secret-keys > secring.gpg
             }
             "signing.gnupg.keyName" -> {
                 useGpgCmd()
