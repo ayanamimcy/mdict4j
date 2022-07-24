@@ -1,10 +1,9 @@
 ---
-name: Feature request
-about: Suggest an idea for this project
-title: '[Feature] support new foo feature for boo user to realize bar'
-labels: 'feature request'
-assignees: ''
-
+name: "Feature request"
+about: "Suggest an idea for this project"
+title: "[Feature] support new foo feature for boo user to realize bar"
+labels:
+- enhancement
 ---
 
 **Is your feature request related to a problem? Please describe.**

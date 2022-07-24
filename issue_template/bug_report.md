@@ -1,10 +1,9 @@
 ---
-name: Bug report
-about: Create a report to help us improve
+name: "Bug report"
+about: "Create a report to help us improve"
 title: "[BUG] throw foo exception when doing boo with dictionary bar"
-labels: 'bug'
-assignees: ''
-
+labels:
+- bug
 ---
 
 **Describe the bug**
