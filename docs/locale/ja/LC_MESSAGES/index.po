@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mdict4j 0.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-03-05 12:54+0900\n"
+"POT-Creation-Date: 2022-08-06 13:10+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -28,28 +28,39 @@ msgid ""
 msgstr ""
 
 #: ../../../docs/index.rst:9
-msgid "Development status"
+msgid "Translations"
 msgstr ""
 
 #: ../../../docs/index.rst:11
-msgid "A status of library development is considered as `Alpha`."
-msgstr ""
-
-#: ../../../docs/index.rst:14
-msgid "License"
+msgid ""
+"Chinese: https://mdict4j.readthedocs.io/zh_CN/latest Japanese: "
+"https://mdict4j.readthedocs.io/ja/latest English: "
+"https://mdict4j.readthedocs.io/en/latest"
 msgstr ""
 
 #: ../../../docs/index.rst:16
+msgid "Development status"
+msgstr ""
+
+#: ../../../docs/index.rst:18
+msgid "A status of library development is considered as `Alpha`."
+msgstr ""
+
+#: ../../../docs/index.rst:21
+msgid "License"
+msgstr ""
+
+#: ../../../docs/index.rst:23
 msgid ""
 "Mdict4j is distributed under GNU General Public License version 3 or (at "
 "your option) any later version. Please see LICENSE file in project root."
 msgstr ""
 
-#: ../../../docs/index.rst:20
+#: ../../../docs/index.rst:27
 msgid "Contents"
 msgstr ""
 
-#: ../../../docs/index.rst:22
+#: ../../../docs/index.rst:29
 msgid ""
 "When you want to use the library in your application project, please "
 "check \"How to use\" section. When you are interested in joining the "
@@ -57,19 +68,19 @@ msgid ""
 "point."
 msgstr ""
 
-#: ../../../docs/index.rst:34
+#: ../../../docs/index.rst:41
 msgid "Index"
 msgstr ""
 
-#: ../../../docs/index.rst:36
+#: ../../../docs/index.rst:43
 msgid ":ref:`genindex`"
 msgstr ""
 
-#: ../../../docs/index.rst:37
+#: ../../../docs/index.rst:44
 msgid ":ref:`modindex`"
 msgstr ""
 
-#: ../../../docs/index.rst:38
+#: ../../../docs/index.rst:45
 msgid ":ref:`search`"
 msgstr ""
 

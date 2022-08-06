@@ -52,12 +52,25 @@ MDictDictionary object has several method to indicate mdx file properties.
 
 
 You can invoke query from MDictDictionary object. MDictDictionary::readArticles method returns a list of entries.
+MDictDictionary::readArticles method returns exact match results.
+MDictDictionary::readArticlesPredictive method returns predictive search match results.
 
 .. code-block:: java
 
     for (Map.Entry<String, String> entry: dictionary.readArticles("hello")) {
         System.out.println("<div><span>%s</span>: %s</div>", entry.getKey(), entry.getValue());
     }
+
+You will see something like ``hello: 你好``
+
+.. code-block:: java
+
+    for (Map.Entry<String, String> entry: dictionary.readArticlesPredictive("happ")) {
+        System.out.println("<div><span>%s</span>: %s</div>", entry.getKey(), entry.getValue());
+    }
+
+You will see something like ``happy: 快乐  happiness: 幸福 ``
+
 
 When you want to load MDD data file, you can give it to MDictDictionary##loadDictionaryData method.
 
@@ -75,3 +88,9 @@ When you want to load MDD data file, you can give it to MDictDictionary##loadDic
     String mediaType = tika.detect(buf);
     System.out.println("Media type should be audio/mpeg: %s", mediaType);
 
+
+Please check javadoc for details.
+
+.. code-block:: bash
+
+    ./gradlew javadoc

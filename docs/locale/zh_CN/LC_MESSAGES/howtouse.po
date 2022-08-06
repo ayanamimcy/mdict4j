@@ -3,15 +3,16 @@
 # This file is distributed under the same license as the mdict4j package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: mdict4j 0.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-03-05 10:16+0900\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"POT-Creation-Date: 2022-08-06 13:39+0900\n"
+"PO-Revision-Date: 2022-08-06 13:31+0900\n"
+"Last-Translator: \n"
+"Language: zh_CN\n"
+"Language-Team: \n"
+"Plural-Forms: nplurals=1; plural=0\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -19,41 +20,68 @@ msgstr ""
 
 #: ../../../docs/howtouse.rst:2
 msgid "How to use mdict4j"
-msgstr ""
+msgstr "如何使用mdict4j"
 
 #: ../../../docs/howtouse.rst:5
 msgid "Install"
-msgstr ""
+msgstr "安装"
 
 #: ../../../docs/howtouse.rst:7
 msgid ""
 "When you use gradle for build system, you can install mdict4j from "
 "mavenCentral."
-msgstr ""
+msgstr "构建系统使用gradle的时候，可以从mavenCentral安装mdict4j。"
 
-#: ../../../docs/howtouse.rst:16
+#: ../../../docs/howtouse.rst:17
+msgid ""
+"We changed groupId from version 0.4.0. If you want to use old versions, "
+"please use group id 'io.github.eb4j'"
+msgstr "我们从0.4.0版本变更了groupId。如果您想要使用旧版本，请使用group id'io.github.eb4j'"
+
+#: ../../../docs/howtouse.rst:22
 msgid "Loading dictionary file"
-msgstr ""
+msgstr "正在载入字典档案"
 
-#: ../../../docs/howtouse.rst:18
+#: ../../../docs/howtouse.rst:24
 msgid ""
 "You should load dictionary and create MdictDictionary object in order to "
 "invoke search query."
-msgstr ""
+msgstr "您应该载入字典并建立MdictDictionary物件，才能呼叫搜寻查询。"
 
-#: ../../../docs/howtouse.rst:26
+#: ../../../docs/howtouse.rst:32
 msgid "MDictDictionary object has several method to indicate mdx file properties."
-msgstr ""
+msgstr "MDictDictionary物件有几种方法来指示mdx档案属性。"
 
-#: ../../../docs/howtouse.rst:48
+#: ../../../docs/howtouse.rst:54
 msgid ""
 "You can invoke query from MDictDictionary object. "
-"MDictDictionary::readArticles method returns a list of entries."
+"MDictDictionary::readArticles method returns a list of entries. "
+"MDictDictionary::readArticles method returns exact match results. "
+"MDictDictionary::readArticlesPredictive method returns predictive search "
+"match results."
 msgstr ""
 
-#: ../../../docs/howtouse.rst:56
+#: ../../../docs/howtouse.rst:64
+msgid "You will see something like ``hello: 你好``"
+msgstr ""
+
+#: ../../../docs/howtouse.rst:72
+msgid "You will see something like ``happy: 快乐  happiness: 幸福 ``"
+msgstr ""
+
+#: ../../../docs/howtouse.rst:75
 msgid ""
 "When you want to load MDD data file, you can give it to "
 "MDictDictionary##loadDictionaryData method."
+msgstr "当您想要载入MDD资料档案时，可以将它交给MDictDictionary##loadDictionaryData方法。"
+
+#: ../../../docs/howtouse.rst:92
+msgid "Please check javadoc for details."
 msgstr ""
+
+#~ msgid ""
+#~ "You can invoke query from "
+#~ "MDictDictionary object. MDictDictionary::readArticles "
+#~ "method returns a list of entries."
+#~ msgstr "您可以从MDictDictionary物件.MDictDictionary::readArticles方法呼叫查询，传回项目清单。"
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mdict4j 0.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-03-05 12:54+0900\n"
+"POT-Creation-Date: 2022-08-06 13:10+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -27,9 +27,10 @@ msgstr ""
 
 #: ../../../docs/reference/fileformat.md:5
 msgid ""
-"A fileformat.md here is the reference description from writemdict project"
-" with copyright by zhansliu, distributed under the MIT License, the term "
-"is attached as MIT.txt."
+"A fileformat.md here is the reference description from [writemdict "
+"project](https://github.com/zhansliu/writemdict) with copyright by "
+"zhansliu, distributed under the MIT License, the term is attached as "
+"MIT.txt."
 msgstr ""
 
 #: ../../../docs/reference/fileformat.md:8
@@ -39,10 +40,10 @@ msgstr ""
 #: ../../../docs/reference/fileformat.md:10
 msgid ""
 "This is a description of version 2.0 of the MDX and MDD file format, used"
-" by the MDict dictionary software. The software is not open-source, nor "
-"is the file format openly specified, so the following description is "
-"based on reverse-engineering, and is likely incomplete and inaccurate in "
-"its details."
+" by the [MDict](http://www.octopus-studio.com/product.en.htm) dictionary "
+"software. The software is not open-source, nor is the file format openly "
+"specified, so the following description is based on reverse-engineering, "
+"and is likely incomplete and inaccurate in its details."
 msgstr ""
 
 #: ../../../docs/reference/fileformat.md:15
@@ -108,9 +109,9 @@ msgid ""
 "Typically, MDD files are associated with an MDX file of the same name "
 "(but with extension .mdx instead of .mdd), and contains resources to be "
 "included in the text of MDX files. For example, and entry of the MDX file"
-" might contain the HTML code <img src=\"/images/image.png\" />, in which "
-"case the MDict software will look for the entry \"\\image.png\" in the "
-"MDD file."
+" might contain the HTML code `<img src=\"/images/image.png\" />`, in "
+"which case the MDict software will look for the entry \"\\image.png\" in "
+"the MDD file."
 msgstr ""
 
 #: ../../../docs/reference/fileformat.md:43
@@ -121,96 +122,402 @@ msgstr ""
 msgid "The basic file structure is a follows:"
 msgstr ""
 
-#: ../../../docs/reference/fileformat.md:70
+#: ../../../docs/reference/fileformat.md
+msgid "MDX File"
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "`header_sect`"
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "Header section. See \"Header Section\" below."
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "`keyword_sect`"
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "Keyword section. See \"Keyword Section\" below."
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "`record_sect`"
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "Record section. See \"Record Section\" below."
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md:53
 msgid "Header Section"
 msgstr ""
 
-#: ../../../docs/reference/fileformat.md:99
+#: ../../../docs/reference/fileformat.md
+msgid "Length"
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "`length`"
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "4 bytes"
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "Length of `header_str`, in bytes. Big-endian."
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "`header_str`"
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "varying"
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "An XML string, encoded in UTF-16LE. See below for details."
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "`checksum`"
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "ADLER32 checksum of `header_str`, stored little-endian."
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md:61
 msgid ""
-"The header_str consists of a single, XML tag dictionary, with various "
-"attributes. For MDX files, they look like this: (newlines added for "
+"The `header_str` consists of a single, XML tag `dictionary`, with various"
+" attributes. For MDX files, they look like this: (newlines added for "
 "clarity)"
 msgstr ""
 
-#: ../../../docs/reference/fileformat.md:118
+#: ../../../docs/reference/fileformat.md:80
 msgid "For MDD files, we have instead:"
 msgstr ""
 
-#: ../../../docs/reference/fileformat.md:136
+#: ../../../docs/reference/fileformat.md:98
 msgid "The meaning of the attributes are explained below:"
 msgstr ""
 
-#: ../../../docs/reference/fileformat.md:209
+#: ../../../docs/reference/fileformat.md
+msgid "Attribute"
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "Description"
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "`GeneratedByEngineVersion`"
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid ""
+"The version of the file format. This document describes version 2.0. "
+"Apart from this, version 1.2 is also possible."
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "`RequiredEngineVersion`"
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "Presumably the lowest format version compatible with this version."
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "`Encrypted`"
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid ""
+"An integer between 0 and 3 (inclusive). If the lower bit is set, "
+"indicates that the first part of the keyword section is encrypted, as "
+"described in the section [Keyword header encryption](#keyword-header-"
+"encryption). If the upper bit is set, indicates that the keyword index is"
+" encrypted, using the scheme described in [Keyword index encryption"
+"](#keyword-index-encryption)."
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "`Encoding`"
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid ""
+"Only used for MDX files. The encoding used for text in the document. "
+"Possible values are \"UTF-8\", \"UTF-16\" (uses little-endian encoding), "
+"\"GBK\", and \"Big5\". For MDD files, the encoding used for the keywords "
+"(file paths) is always UTF-16, and the records consist of binary data."
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "`Format`"
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid ""
+"The format of the dictionary entry texts. Possible values include "
+"\"Html\" and \"Text\". For MDD files, this must be empty."
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "`CreationDate`"
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "The date the dictionary was created."
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "`Compact`"
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid ""
+"If this is \"Yes\", indicates the dictionary entries is in an Mdict-"
+"specific compact format, where certain string are replaced according to "
+"the scheme specified in `StyleSheet`. See the documentation for the "
+"official MdxBuilder client for details."
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "`Compat`"
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid ""
+"Appears to be a typo for `Compact`, which certain versions of the "
+"official Mdict client look for instead of `Compact`."
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "`KeyCaseSensitive`"
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid ""
+"Indicates to the dictionary reader whether or not keys should be treated "
+"in a case-insensitive manner."
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "`Description`"
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid ""
+"A description of the dictionary, which appears as the \":about\" page in "
+"the official MDict client."
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "`Title`"
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "The title of the dictionary."
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "`DataSourceFormat`"
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "Unknown."
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "`StyleSheet`"
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid ""
+"Used in conjunction with the `Compact` option. See the documentation for "
+"the official MdxBuilder client for details."
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "`RegisterBy`"
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid ""
+"Either \"EMail\" or \"DeviceID\". Only used if the lower bit of "
+"`Encrypted` is set. Indicates which piece of user-identifying data is "
+"used to encrypt the encryption key. See the section [Keyword header "
+"encryption](#keyword-header-encryption) for details."
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "`RegCode`"
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid ""
+"When keyword header encryption is used (see [Keyword header encryption"
+"](#keyword-header-encryption)), this is one way to deliver the encrypted "
+"key. In this case, this is a string consisting of 32 hexadecimal digits."
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md:118
 msgid "Keyword Section"
 msgstr ""
 
-#: ../../../docs/reference/fileformat.md:211
+#: ../../../docs/reference/fileformat.md:120
 msgid ""
 "The keyword section contains all the keywords in the dictionary, divided "
 "into blocks, as well as information about the sizes of these blocks."
 msgstr ""
 
-#: ../../../docs/reference/fileformat.md:275
+#: ../../../docs/reference/fileformat.md
+msgid "`num_blocks`"
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "8 bytes"
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "Number of items in key_blocks. Big-endian. Possibly encrypted, see below."
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "`num_entries`"
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "Total number of keywords. Big-endian. Possibly encrypted, see below."
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "`key_index_decomp_len`"
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid ""
+"Number of bytes in decompressed version of `key_index`. Big-endian. "
+"Possibly encrypted, see below."
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "`key_index_comp_len`"
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid ""
+"Number of bytes in compressed version of `key_index` (including the "
+"`comp_type` and `checksum` parts). Big-endian. Possibly encrypted, see "
+"below."
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "`key_blocks_len`"
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid ""
+"Total number of bytes taken up by key_blocks. Big-endian. Possibly "
+"encrypted, see below."
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid ""
+"ADLER32 checksum of the preceding 40 bytes. If those are encrypted, it is"
+" the checksum of the decrypted version. Big-endian."
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "`key_index`"
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "The keyword index, compressed and possibly encrypted. See below."
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "`key_blocks[0]`"
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "A compressed block containing keywords, compressed. See below."
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "..."
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "`key_blocks[num_blocks-1]`"
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md:135
 msgid "Keyword header encryption:"
 msgstr ""
 
-#: ../../../docs/reference/fileformat.md:277
+#: ../../../docs/reference/fileformat.md:137
 msgid ""
-"If the parameter Encrypted in the header has the lowest bit set (i.e. "
-"Encrypted | 1 is nonzero), then the 40-byte block from num_blocks are "
-"encrypted. The encryption used is Salsa20/8 (Salsa20 with 8 rounds "
+"If the parameter `Encrypted` in the header has the lowest bit set (i.e. "
+"`Encrypted | 1` is nonzero), then the 40-byte block from `num_blocks` are"
+" encrypted. The encryption used is Salsa20/8 (Salsa20 with 8 rounds "
 "instead of 20). In pseudo-Python:"
 msgstr ""
 
-#: ../../../docs/reference/fileformat.md:287
+#: ../../../docs/reference/fileformat.md:147
 msgid ""
-"Here, encryption_key is the dictionary password specified on creation of "
-"the dictionary."
+"Here, `encryption_key` is the dictionary password specified on creation "
+"of the dictionary."
 msgstr ""
 
-#: ../../../docs/reference/fileformat.md:289
+#: ../../../docs/reference/fileformat.md:149
 msgid ""
-"This encryption_key is not distributed directly. Instead it is further "
-"encrypted, using a piece of data, user_id, that is specific to the user "
-"or the client machine, according to the following scheme:"
+"This `encryption_key` is not distributed directly. Instead it is further "
+"encrypted, using a piece of data, `user_id`, that is specific to the user"
+" or the client machine, according to the following scheme:"
 msgstr ""
 
-#: ../../../docs/reference/fileformat.md:293
+#: ../../../docs/reference/fileformat.md:153
 msgid ""
-"The string user_id can be either an email address "
+"The string `user_id` can be either an email address "
 "(\"example@example.com\") that the user enters into his/her MDict client,"
 " or a device ID (\"12345678-90AB-CDEF-0123-4567890A\") which the MDict "
 "client obtains in different ways depending on the platform. The choice of"
-" which one to use depends on the attribute RegisterBy in the file header."
-" (See Header section.) In either case, user_id is an ASCII-encoded "
-"string. On certain platforms, the official MDict client seems to default "
-"to the DeviceID being the empty string."
+" which one to use depends on the attribute `RegisterBy` in the file "
+"header. (See [Header section](#header-section).) In either case, "
+"`user_id` is an ASCII-encoded string. On certain platforms, the official "
+"MDict client seems to default to the DeviceID being the empty string."
 msgstr ""
 
-#: ../../../docs/reference/fileformat.md:296
+#: ../../../docs/reference/fileformat.md:156
 msgid ""
-"The 128-bit reg_code is then distributed to the user. This can be done in"
-" two ways:"
+"The 128-bit `reg_code` is then distributed to the user. This can be done "
+"in two ways:"
 msgstr ""
 
-#: ../../../docs/reference/fileformat.md:298
+#: ../../../docs/reference/fileformat.md:158
 msgid ""
-"If the MDX file is called dictionary.mdx, the dictionary reader should "
-"look for a file called dictionary.key in the same directory, which "
-"contains reg_code as a 32-digit hexadecimal string."
+"If the MDX file is called `dictionary.mdx`, the dictionary reader should "
+"look for a file called `dictionary.key` in the same directory, which "
+"contains `reg_code` as a 32-digit hexadecimal string."
 msgstr ""
 
-#: ../../../docs/reference/fileformat.md:299
+#: ../../../docs/reference/fileformat.md:159
 msgid ""
-"Otherwise, reg_code can be included in the header of the MDX file, as the"
-" attribute RegCode."
+"Otherwise, `reg_code` can be included in the header of the MDX file, as "
+"the attribute `RegCode`."
 msgstr ""
 
-#: ../../../docs/reference/fileformat.md:301
+#: ../../../docs/reference/fileformat.md:161
 msgid "Keyword index"
 msgstr ""
 
-#: ../../../docs/reference/fileformat.md:303
+#: ../../../docs/reference/fileformat.md:163
 msgid ""
 "The keyword index lists some basic data about the key blocks. It is "
 "compressed (see \"Compression\"), and possibly encrypted (see \"Keyword "
@@ -218,93 +525,307 @@ msgid ""
 "this:"
 msgstr ""
 
-#: ../../../docs/reference/fileformat.md:367
+#: ../../../docs/reference/fileformat.md
+msgid "`decompress(key_index)`"
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "`num_entries[0]`"
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "Number of keywords in the first keyword block."
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "`first_size[0]`"
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "2 bytes"
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid ""
+"Length of `first_word[0]`, not including trailing null character. In "
+"number of \"basic units\" for the encoding, so e.g. bytes for UTF-8, and "
+"2-byte units for UTF-16."
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "`first_word[0]`"
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid ""
+"The first keyword (alphabetically) in the `key_blocks[0]` keyword block. "
+"Encoding given by `Encoding` attribute in the header."
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "`last_size[0]`"
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid ""
+"Length of `last_word[0]`, not including trailing null character. In "
+"number of \"basic units\" for the encoding, so e.g. bytes for UTF-8, and "
+"2-byte units for UTF-16."
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "`last_word[0]`"
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid ""
+"The last keyword (alphabetically) in the `key_blocks[0]` keyword block. "
+"Encoding given by `Encoding` attribute in the header."
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "`comp_size[0]`"
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "Compressed size of `key_blocks[0]`."
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "`decomp_size[0]`"
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "Decompressed size of `key_blocks[0]`."
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "`num_entries[1]`"
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "`decomp_size[num_blocks-1]`"
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md:178
 msgid "Keyword index encryption:"
 msgstr ""
 
-#: ../../../docs/reference/fileformat.md:369
+#: ../../../docs/reference/fileformat.md:180
 msgid ""
-"If the parameter Encrypted in the header has its second-lowest bit set "
-"(i.e. Encrypted | 2 is nonzero), then the keyword index is further "
-"encrypted. In this case, the comp_type and checksum fields will be "
+"If the parameter `Encrypted` in the header has its second-lowest bit set "
+"(i.e. `Encrypted | 2` is nonzero), then the keyword index is further "
+"encrypted. In this case, the `comp_type` and `checksum` fields will be "
 "unchanged (refer to the section Compression), the following C function "
-"will be used to encrypt the compressed_data part, after compression."
+"will be used to encrypt the `compressed_data` part, after compression."
 msgstr ""
 
-#: ../../../docs/reference/fileformat.md:381
+#: ../../../docs/reference/fileformat.md:192
 msgid ""
-"The encryption key used is ripemd128(checksum + "
-"\"\\x95\\x36\\x00\\x00\"), where + denotes string concatenation."
+"The encryption key used is `ripemd128(checksum + "
+"\"\\x95\\x36\\x00\\x00\")`, where + denotes string concatenation."
 msgstr ""
 
-#: ../../../docs/reference/fileformat.md:383
+#: ../../../docs/reference/fileformat.md:194
 msgid "Keyword blocks"
 msgstr ""
 
-#: ../../../docs/reference/fileformat.md:385
+#: ../../../docs/reference/fileformat.md:196
 msgid ""
 "Each keyword is compressed (see \"Compression\"). After decompressing, "
 "they look like this:"
 msgstr ""
 
-#: ../../../docs/reference/fileformat.md:424
-msgid ""
-"The offset should be interpreted as follows: Decompress all record "
-"blocks, and concatenate them together, and let records denote the "
-"resulting array of bytes. The record corresponding to key[i] then starts "
-"at records[offset[i]]."
+#: ../../../docs/reference/fileformat.md
+msgid "`decompress(key_blocks[0])`"
 msgstr ""
 
-#: ../../../docs/reference/fileformat.md:427
+#: ../../../docs/reference/fileformat.md
+msgid "`offset[0]`"
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid ""
+"Offset where the record corresponding to `key[0]` can be found, see "
+"below. Big-endian."
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "`key[0]`"
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid ""
+"The first keyword in the dictionary, null-terminated and encoded using "
+"`Encoding`."
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "`offset[1]`"
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "`key[1]`"
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md:206
+msgid ""
+"The offset should be interpreted as follows: Decompress all record "
+"blocks, and concatenate them together, and let `records` denote the "
+"resulting array of bytes. The record corresponding to `key[i]` then "
+"starts at `records[offset[i]]`."
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md:209
 msgid "Record section"
 msgstr ""
 
-#: ../../../docs/reference/fileformat.md:429
+#: ../../../docs/reference/fileformat.md:211
 msgid "The record section looks like this:"
 msgstr ""
 
-#: ../../../docs/reference/fileformat.md:503
+#: ../../../docs/reference/fileformat.md
+msgid ""
+"Number items in `record_blocks`. Does not need to equal the number of "
+"keyword blocks. Big-endian."
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid ""
+"Total number of records in dictionary. Should be equal to "
+"`keyword_sect.num_entries`. Big-endian."
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "`index_len`"
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid ""
+"Total size of the `comp_size[i]` and `decomp_size[i]` variables, in "
+"bytes. In other words, should equal 16 times `num_blocks`. Big-endian."
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "`blocks_len`"
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "Total size of the `rec_block[i]` sections, in bytes. Big-endian."
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "Length of `rec_block[0]`, in bytes. Big-endian."
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "Decompressed size of `rec_block[i]`, in bytes. Big-endian."
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "`comp_size[1]`"
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "Length of `rec_block[1]`, in bytes. Big-endian."
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "`rec_block[0]`"
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "A compressed block containing records. See below."
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "`rec_block[num_blocks-1]`"
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md:228
 msgid "Record block"
 msgstr ""
 
-#: ../../../docs/reference/fileformat.md:505
+#: ../../../docs/reference/fileformat.md:230
 msgid ""
 "Each record block is compressed (see \"Compression\"). After "
 "decompressing, they look like this:"
 msgstr ""
 
-#: ../../../docs/reference/fileformat.md:534
+#: ../../../docs/reference/fileformat.md
+msgid "`decompress(rec_block[0])`"
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "`record[0]`"
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid ""
+"The first record. If in an MDX file, this is null-terminated and encoded "
+"using `Encoding`."
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "`record[1]`"
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md:238
 msgid "Compression:"
 msgstr ""
 
-#: ../../../docs/reference/fileformat.md:536
+#: ../../../docs/reference/fileformat.md:240
 msgid ""
 "Various data blocks are compressed using the same scheme. These all look "
 "like these:"
 msgstr ""
 
-#: ../../../docs/reference/fileformat.md:565
+#: ../../../docs/reference/fileformat.md
+msgid "`compress(data)`"
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "`comp_type`"
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "Compression type. See below."
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "ADLER32 checksum of the uncompressed data. Big-endian."
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "`compressed_data`"
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md
+msgid "Compressed version of `data`."
+msgstr ""
+
+#: ../../../docs/reference/fileformat.md:248
 msgid ""
-"The compression type can be indicated by comp_type. There are three "
+"The compression type can be indicated by `comp_type`. There are three "
 "options:"
 msgstr ""
 
-#: ../../../docs/reference/fileformat.md:567
+#: ../../../docs/reference/fileformat.md:250
 msgid ""
-"If comp_type is '\\x00\\x00\\x00\\x00', then no compression is applied at"
-" all, and compressed_data is equal to data."
+"If `comp_type` is `'\\x00\\x00\\x00\\x00'`, then no compression is "
+"applied at all, and `compressed_data` is equal to `data`."
 msgstr ""
 
-#: ../../../docs/reference/fileformat.md:568
-msgid "If comp_type is '\\x01\\x00\\x00\\x00', LZO compression is used."
+#: ../../../docs/reference/fileformat.md:251
+msgid "If `comp_type` is `'\\x01\\x00\\x00\\x00'`, LZO compression is used."
 msgstr ""
 
-#: ../../../docs/reference/fileformat.md:569
+#: ../../../docs/reference/fileformat.md:252
 msgid ""
-"If comp_type is '\\x02\\x00\\x00\\x00', zlib compression is used. It so "
-"happens that the zlib compression format appends an ADLER32 checksum, so "
-"in this case, checksum will be equal to the last four bytes of "
-"compressed_data."
+"If `comp_type` is `'\\x02\\x00\\x00\\x00'`, zlib compression is used. It "
+"so happens that the zlib compression format appends an ADLER32 checksum, "
+"so in this case, `checksum` will be equal to the last four bytes of "
+"`compressed_data`."
 msgstr ""
 
 #~ msgid ""
@@ -539,5 +1060,164 @@ msgstr ""
 #~ " uncompressed data. Big-endian. | |"
 #~ " compressed_data | varying | Compressed "
 #~ "version of data.|"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "A fileformat.md here is the reference"
+#~ " description from writemdict project with"
+#~ " copyright by zhansliu, distributed under"
+#~ " the MIT License, the term is "
+#~ "attached as MIT.txt."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "This is a description of version "
+#~ "2.0 of the MDX and MDD file "
+#~ "format, used by the MDict dictionary "
+#~ "software. The software is not open-"
+#~ "source, nor is the file format "
+#~ "openly specified, so the following "
+#~ "description is based on reverse-"
+#~ "engineering, and is likely incomplete "
+#~ "and inaccurate in its details."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Typically, MDD files are associated with"
+#~ " an MDX file of the same name"
+#~ " (but with extension .mdx instead of"
+#~ " .mdd), and contains resources to be"
+#~ " included in the text of MDX "
+#~ "files. For example, and entry of "
+#~ "the MDX file might contain the "
+#~ "HTML code <img src=\"/images/image.png\" />,"
+#~ " in which case the MDict software "
+#~ "will look for the entry \"\\image.png\""
+#~ " in the MDD file."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The header_str consists of a single, "
+#~ "XML tag dictionary, with various "
+#~ "attributes. For MDX files, they look "
+#~ "like this: (newlines added for clarity)"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "If the parameter Encrypted in the "
+#~ "header has the lowest bit set "
+#~ "(i.e. Encrypted | 1 is nonzero), "
+#~ "then the 40-byte block from num_blocks"
+#~ " are encrypted. The encryption used "
+#~ "is Salsa20/8 (Salsa20 with 8 rounds "
+#~ "instead of 20). In pseudo-Python:"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Here, encryption_key is the dictionary "
+#~ "password specified on creation of the"
+#~ " dictionary."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "This encryption_key is not distributed "
+#~ "directly. Instead it is further "
+#~ "encrypted, using a piece of data, "
+#~ "user_id, that is specific to the "
+#~ "user or the client machine, according"
+#~ " to the following scheme:"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The string user_id can be either "
+#~ "an email address (\"example@example.com\") "
+#~ "that the user enters into his/her "
+#~ "MDict client, or a device ID "
+#~ "(\"12345678-90AB-CDEF-0123-4567890A\") which the "
+#~ "MDict client obtains in different ways"
+#~ " depending on the platform. The "
+#~ "choice of which one to use depends"
+#~ " on the attribute RegisterBy in the"
+#~ " file header. (See Header section.) "
+#~ "In either case, user_id is an "
+#~ "ASCII-encoded string. On certain platforms,"
+#~ " the official MDict client seems to"
+#~ " default to the DeviceID being the"
+#~ " empty string."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The 128-bit reg_code is then distributed"
+#~ " to the user. This can be done"
+#~ " in two ways:"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "If the MDX file is called "
+#~ "dictionary.mdx, the dictionary reader should"
+#~ " look for a file called "
+#~ "dictionary.key in the same directory, "
+#~ "which contains reg_code as a 32-digit"
+#~ " hexadecimal string."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Otherwise, reg_code can be included in"
+#~ " the header of the MDX file, as"
+#~ " the attribute RegCode."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "If the parameter Encrypted in the "
+#~ "header has its second-lowest bit "
+#~ "set (i.e. Encrypted | 2 is "
+#~ "nonzero), then the keyword index is "
+#~ "further encrypted. In this case, the "
+#~ "comp_type and checksum fields will be"
+#~ " unchanged (refer to the section "
+#~ "Compression), the following C function "
+#~ "will be used to encrypt the "
+#~ "compressed_data part, after compression."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The encryption key used is "
+#~ "ripemd128(checksum + \"\\x95\\x36\\x00\\x00\"), "
+#~ "where + denotes string concatenation."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The offset should be interpreted as "
+#~ "follows: Decompress all record blocks, "
+#~ "and concatenate them together, and let"
+#~ " records denote the resulting array "
+#~ "of bytes. The record corresponding to"
+#~ " key[i] then starts at records[offset[i]]."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The compression type can be indicated"
+#~ " by comp_type. There are three "
+#~ "options:"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "If comp_type is '\\x00\\x00\\x00\\x00', then"
+#~ " no compression is applied at all,"
+#~ " and compressed_data is equal to "
+#~ "data."
+#~ msgstr ""
+
+#~ msgid "If comp_type is '\\x01\\x00\\x00\\x00', LZO compression is used."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "If comp_type is '\\x02\\x00\\x00\\x00', zlib"
+#~ " compression is used. It so happens"
+#~ " that the zlib compression format "
+#~ "appends an ADLER32 checksum, so in "
+#~ "this case, checksum will be equal "
+#~ "to the last four bytes of "
+#~ "compressed_data."
 #~ msgstr ""
 
