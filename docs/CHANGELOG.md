@@ -3,6 +3,15 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [0.4.3]
+
+* Fix issue in FatJar
+* Change dependencies versions
+  * Tika@2.4.1 (Fix CVE-2022-33879)
+  * Jackson@2.12.7 (Fix FatJar issue)
+* Update test case
+
+
 ## [0.4.2]
 
 * Docs: Add .readthedocs.yaml document build configuration file
@@ -80,7 +89,8 @@ All notable changes to this project will be documented in this file.
 ## 0.1.0
 * First internal release
 
-[Unreleased]: https://codeberg.org/miurahr/mdict4j/compare/v0.4.2...HEAD
+[Unreleased]: https://codeberg.org/miurahr/mdict4j/compare/v0.4.3...HEAD
+[0.4.3]: https://codeberg.org/miurahr/mdict4j/compare/v0.4.2...v0.4.3
 [0.4.2]: https://codeberg.org/miurahr/mdict4j/compare/v0.4.0...v0.4.2
 [0.4.0]: https://codeberg.org/miurahr/mdict4j/compare/v0.3.1...v0.4.0
 [0.3.1]: https://codeberg.org/miurahr/mdict4j/compare/v0.3.0...v0.3.1
