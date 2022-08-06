@@ -18,12 +18,24 @@
 
 package io.github.eb4j.mdict;
 
+/**
+ * @author Hiroshi Miura
+ */
 public class MDException extends Exception {
 
+    /**
+     * General exception on MDict4j.
+     * @param msg error message.
+     */
     public MDException(final String msg) {
         super(msg);
     }
 
+    /**
+     * General exception on MDict4j.
+     * @param msg error message.
+     * @param cause Throwable that is root cause of exception.
+     */
     public MDException(final String msg, final Throwable cause) {
         super(msg, cause);
     }

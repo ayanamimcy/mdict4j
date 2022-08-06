@@ -21,6 +21,12 @@ package io.github.eb4j.mdict;
 import org.trie4j.MapTrie;
 import org.trie4j.patricia.MapPatriciaTrie;
 
+/**
+ * Builder class for DictionaryData POJO.
+ * @author Hiroshi Miura
+ *
+ * @param <T> indexed value type.
+ */
 public final class DictionaryDataBuilder<T> {
 
     private final MapTrie<Object> temp = new MapPatriciaTrie<>();

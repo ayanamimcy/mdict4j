@@ -34,6 +34,9 @@ start point.
    :maxdepth: 1
 
    howtouse
+   SECURITY
+   CONTRIBUTE
+   CODE_OF_CONDUCT
    reference/fileformat
    CHANGELOG
 

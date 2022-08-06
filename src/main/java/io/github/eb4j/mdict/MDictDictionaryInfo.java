@@ -23,6 +23,11 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 
 
+/**
+ * XML data structure definition for MDict header.
+ *
+ * @author Hiroshi Miura
+ */
 @JacksonXmlRootElement(localName = "Dictionary")
 public final class MDictDictionaryInfo {
     @JacksonXmlProperty(localName = "GeneratedByEngineVersion", isAttribute = true)

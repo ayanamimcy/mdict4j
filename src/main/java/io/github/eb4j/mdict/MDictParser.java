@@ -35,6 +35,9 @@ import java.util.regex.Pattern;
 import java.util.zip.Adler32;
 import java.util.zip.DataFormatException;
 
+/**
+ * @author Hiroshi Miura
+ */
 abstract class MDictParser {
 
     protected final MDFileInputStream mdInputStream;

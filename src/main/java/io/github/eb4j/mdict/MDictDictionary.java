@@ -42,6 +42,9 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.zip.DataFormatException;
 
+/**
+ * @author Hiroshi Miura
+ */
 public class MDictDictionary {
     private final MDFileInputStream mdInputStream;
     private final DictionaryData<Object> dictionaryData;
@@ -59,7 +62,16 @@ public class MDictDictionary {
     private final String keyCaseSensitive;
     private final boolean mdx;
 
-    public MDictDictionary(final MDictDictionaryInfo info, final DictionaryData<Object> index,
+    /**
+     * Constructor.
+     *
+     * @param info MDictDictionaryInfo object to handle.
+     * @param index index object.
+     * @param recordIndex record index object.
+     * @param mdInputStream
+     * @param mdx
+     */
+    protected MDictDictionary(final MDictDictionaryInfo info, final DictionaryData<Object> index,
                            final RecordIndex recordIndex, final MDFileInputStream mdInputStream,
                            final boolean mdx) {
         dictionaryData = index;
@@ -137,6 +149,17 @@ public class MDictDictionary {
         return styleSheet;
     }
 
+    /**
+     * read articles from dictionary with predictive(prefix) search.
+     * <p>
+     *     It read articles with prefix search.
+     *     If you looks for word prefix "happ" then you may find words like
+     *     "happy", "happiness", and "happily".
+     * </p>
+     * @param word
+     * @return
+     * @throws MDException
+     */
     public List<Map.Entry<String, String>> readArticlesPredictive(final String word) throws MDException {
         if (!mdx) {
             throw new MDException("Can not retrieve text data from MDD file.");
@@ -148,6 +171,15 @@ public class MDictDictionary {
         return result;
     }
 
+    /**
+     * read article from dictionary with exact match search.
+     * <p>
+     *     Its results depends indexed words in dictionary data.
+     * </p>
+     * @param word
+     * @return
+     * @throws MDException
+     */
     public List<Map.Entry<String, String>> readArticles(final String word) throws MDException {
         if (!mdx) {
             throw new MDException("Can not retrieve text data from MDD file.");
@@ -254,6 +286,16 @@ public class MDictDictionary {
         return f;
     }
 
+    /**
+     * Dictionary loader.
+     * <p>
+     * entry point of MDict4j dictionary loader.
+     * It constructs MDictDictionary object.
+     *
+     * @param mdxFile File path of MDX file.
+     * @return MDictDictionary object.
+     * @throws MDException when something goes wrong.
+     */
     public static MDictDictionary loadDictionary(final String mdxFile) throws MDException {
         File file = new File(mdxFile);
         if (!file.isFile()) {
@@ -276,6 +318,17 @@ public class MDictDictionary {
         return new MDictDictionary(info, index, record, mdxInputStream, true);
     }
 
+    /**
+     * Dictionary data loader.
+     * <p>
+     *     entry point of MDict4j Data loader.
+     *     It constructs MDictDictionary object from MDD file.
+     * </p>
+     * @param mdxFile MDX file.
+     * @return MDictDictionary object.
+     * @throws MDException when something goes wrong.
+     * @throws IOException when MDX file doesn't exist.
+     */
     public static MDictDictionary loadDictionaryData(final String mdxFile) throws MDException, IOException {
         File file = new File(mdxFile);
         if (!file.isFile()) {
