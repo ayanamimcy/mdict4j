@@ -79,7 +79,7 @@ class MDictProprietaryTest {
     @EnabledIf("target2FileExist")
     void loadItalianDictionary() throws URISyntaxException, MDException {
         MDictDictionary dictionary = MDictDictionary.loadDictionary(Objects.requireNonNull(
-                this.getClass().getResource(TARGET)).toURI().getPath());
+                this.getClass().getResource(TARGET2)).toURI().getPath());
         assertTrue(dictionary.isMdx());
         assertEquals(StandardCharsets.UTF_8, dictionary.getEncoding());
         assertFalse(dictionary.isHeaderEncrypted());
