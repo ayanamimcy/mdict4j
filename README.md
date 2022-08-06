@@ -1,7 +1,9 @@
 # MDict4J library
 
+[![Chinese Documentation Status](https://readthedocs.org/projects/mdict4j-chinese/badge/?version=latest)](https://mdict4j.readthedocs.io/zh_CN/latest/?badge=latest) 
+
 MDict is one of popular dictionary formats.
-mdict4j is a parser library for MDict dictionary.
+mdict4j is a loader and parser library for MDict dictionary.
 
 ## Development status
 
@@ -10,6 +12,10 @@ A status of library development is considered as `Alpha`.
 ## Document
 
 You can find a document at https://mdict4j.readthedocs.io/en/latest/
+
+There is chinese translation at https://mdict4j.readthedocs.io/zh_CN/latest/ 
+
+You are welcome to write or translate documents!
 
 ## License
 
