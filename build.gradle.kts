@@ -25,9 +25,9 @@ repositories {
 
 dependencies {
     implementation("org.jetbrains:annotations:23.0.0")
-    implementation("com.fasterxml.jackson.core:jackson-core:2.13.3")
-    implementation("com.fasterxml.jackson.core:jackson-databind:2.13.3")
-    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.13.3")
+    implementation("com.fasterxml.jackson.core:jackson-core:2.12.7")
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.12.7")
+    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.12.7")
     implementation("org.bouncycastle:bcprov-jdk15on:1.70")
     implementation("org.anarres.lzo:lzo-core:1.0.6")
     implementation("com.github.takawitter:trie4j:0.9.8")
@@ -38,7 +38,7 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-params:5.8.2")
     testImplementation("org.junit.jupiter:junit-jupiter-engine:5.8.2")
     testImplementation("org.jsoup:jsoup:1.15.2")
-    testImplementation("org.apache.tika:tika-core:2.4.0")
+    testImplementation("org.apache.tika:tika-core:2.4.1")
     testRuntimeOnly("org.slf4j:slf4j-simple:1.7.36")
 }
 
