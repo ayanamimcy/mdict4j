@@ -69,7 +69,7 @@ You will see something like ``hello: 你好``
         System.out.println("<div><span>%s</span>: %s</div>", entry.getKey(), entry.getValue());
     }
 
-You will see something like ``happy: 快乐  happiness: 幸福 ``
+You will see something like ``happy: 快乐  happiness: 幸福``
 
 
 When you want to load MDD data file, you can give it to MDictDictionary##loadDictionaryData method.
