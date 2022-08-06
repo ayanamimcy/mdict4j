@@ -5,6 +5,13 @@ Mdict4j
 MDict is one of popular dictionary formats.
 Mdict4j is a parser library for mdict dictionary.
 
+Translations
+============
+
+Chinese: https://mdict4j.readthedocs.io/zh_CN/latest
+Japanese: https://mdict4j.readthedocs.io/ja/latest
+English: https://mdict4j.readthedocs.io/en/latest
+
 Development status
 ==================
 
