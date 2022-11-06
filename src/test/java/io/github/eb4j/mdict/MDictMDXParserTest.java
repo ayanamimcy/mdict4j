@@ -40,7 +40,7 @@ class MDictMDXParserTest {
         assertEquals("Html", dictionaryInfo.getFormat());
         assertEquals("2.0", dictionaryInfo.getRequiredEngineVersion());
         assertEquals(630, dictionaryInfo.getKeyBlockPosition());
-        assertEquals("0", dictionaryInfo.getEncrypted());
+        assertEquals(0, dictionaryInfo.getEncrypted());
     }
 
     @Test
@@ -64,7 +64,7 @@ class MDictMDXParserTest {
         assertEquals("Html", dictionaryInfo.getFormat());
         assertEquals("1.2", dictionaryInfo.getRequiredEngineVersion());
         assertEquals(1258, dictionaryInfo.getKeyBlockPosition());
-        assertEquals("No", dictionaryInfo.getEncrypted());
+        assertEquals(0, dictionaryInfo.getEncrypted());
     }
 
     @Test

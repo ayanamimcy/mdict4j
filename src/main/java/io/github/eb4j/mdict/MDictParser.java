@@ -25,12 +25,14 @@ import io.github.eb4j.mdict.io.MDFileInputStream;
 import io.github.eb4j.mdict.io.MDInputStream;
 import io.github.eb4j.mdict.io.MDictUtils;
 
+import java.awt.*;
 import java.io.IOException;
 import java.nio.ByteOrder;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.regex.Pattern;
 import java.util.zip.Adler32;
 import java.util.zip.DataFormatException;
@@ -77,6 +79,7 @@ abstract class MDictParser {
             protected boolean isV2Index() {
                 return true;
             }
+
             @Override
             protected String unescapeKey(final String keytext) {
                 return MDD_REPLACE_PATTERN.matcher(keytext).replaceAll("/");
@@ -111,19 +114,13 @@ abstract class MDictParser {
         if (!isV2Index()) {
             return false;
         }
-        int encrypt = Integer.parseInt(dictionaryInfo.getEncrypted());
+        int encrypt = dictionaryInfo.getEncrypted();
         return (encrypt & 0x01) > 0;
     }
 
     boolean isIndexEncrypted() {
-        if ("Yes".equals(dictionaryInfo.getEncrypted())) {
-            return true;
-        } else if ("No".equals(dictionaryInfo.getEncrypted())) {
-            return false;
-        } else {
-            int encrypt = Integer.parseInt(dictionaryInfo.getEncrypted());
-            return (encrypt & 0x02) > 0;
-        }
+        int encrypt = dictionaryInfo.getEncrypted();
+        return (encrypt & 0x02) > 0;
     }
 
     /**
@@ -266,16 +263,15 @@ abstract class MDictParser {
      * +-----------------------------------------------------------------+
      * | 02 00 00 00 | adler32 | zlib compressed block                   |
      * +-----------------------------------------------------------------+
-     *
+     * <p>
      * - decompressed key format
      * +--------------------------------------------------+
      * | key id | key text                            |00 |
      * +--------------------------------------------------+
-     *            ....
+     * ....
      * +--------------------------------------------------+
      * | key id | key text                            |00 |
      * +--------------------------------------------------+
-     *
      */
     private DictionaryData<Object> parseKeyBlock()
             throws MDException, IOException, DataFormatException {
@@ -314,6 +310,8 @@ abstract class MDictParser {
         }
         DictionaryDataBuilder<Object> newDataBuilder = new DictionaryDataBuilder<>();
         long totalKeys = 0;
+        String lastKey = null;
+        long lastKeyOffset = 0;
         for (int i = 0; i < keyNumBlocks; i++) {
             MDInputStream blockIns = MDictUtils.decompress(mdInputStream, keyCompSize[i], keyDecompSize[i], false);
             for (int j = 0; j < numEntries[i]; j++) {
@@ -323,11 +321,17 @@ abstract class MDictParser {
                 } else {
                     offset = MDictUtils.readInt(blockIns);
                 }
-                String keytext = unescapeKey(MDictUtils.readCString(blockIns, encoding));
-                newDataBuilder.add(keytext, offset);
+                if (Objects.nonNull(lastKey) && !"".equals(lastKey)) {
+                    newDataBuilder.add(lastKey, DictionaryDataOffset.of(lastKeyOffset, offset - lastKeyOffset));
+                }
+
+                lastKey = unescapeKey(MDictUtils.readCString(blockIns, encoding));
+                lastKeyOffset = offset;
                 totalKeys++;
             }
+
         }
+        newDataBuilder.add(lastKey, DictionaryDataOffset.of(lastKeyOffset, -1));
         if (totalKeys != keySum) {
             throw new MDException("Invalid number of keys");
         }

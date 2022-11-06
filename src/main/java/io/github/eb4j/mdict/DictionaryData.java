@@ -43,12 +43,15 @@ public final class DictionaryData<T> {
 
     private final MapDoubleArray<Object> data;
 
+    private final List<String> entryKeys;
+
     /**
      * POJO class to hold dictionary data.
      * @param trie source Trie object.
      */
-    public DictionaryData(final MapTrie<Object> trie) {
-        data = new MapDoubleArray<>(trie);
+    public DictionaryData(final MapTrie<Object> trie, final List<String> entryKeys) {
+        this.data = new MapDoubleArray<>(trie);
+        this.entryKeys = new ArrayList<>(entryKeys);
     }
 
     /**
@@ -118,5 +121,9 @@ public final class DictionaryData<T> {
      */
     public int size() {
         return data.size();
+    }
+
+    public List<String> getEntryKeys(int page, int size) {
+        return entryKeys.subList(page * size, (page + 1) * size);
     }
 }

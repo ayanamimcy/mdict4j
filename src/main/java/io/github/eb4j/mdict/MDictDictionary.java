@@ -49,7 +49,7 @@ public class MDictDictionary {
     private final MDFileInputStream mdInputStream;
     private final DictionaryData<Object> dictionaryData;
     private final RecordIndex recordIndex;
-    private final LoadingCache<Long, String> textCache;
+    private final LoadingCache<DictionaryDataOffset, String> textCache;
 
     private final String mdxVersion;
     private final String title;
@@ -58,7 +58,7 @@ public class MDictDictionary {
     private final String format;
     private final String description;
     private final String styleSheet;
-    private final String encrypted;
+    private final int encrypted;
     private final String keyCaseSensitive;
     private final boolean mdx;
 
@@ -124,17 +124,11 @@ public class MDictDictionary {
     }
 
     public boolean isHeaderEncrypted() {
-        return (Integer.parseInt(encrypted) & 0x01) > 0;
+        return (encrypted & 0x01) > 0;
     }
 
     public boolean isIndexEncrypted() {
-        if ("Yes".equals(encrypted)) {
-            return true;
-        }
-        if ("No".equals(encrypted)) {
-            return false;
-        }
-        return (Integer.parseInt(encrypted) & 0x02) > 0;
+        return (encrypted & 0x02) > 0;
     }
 
     public boolean isMdx() {
@@ -185,7 +179,7 @@ public class MDictDictionary {
             throw new MDException("Can not retrieve text data from MDD file.");
         }
         List<Map.Entry<String, String>> result = new ArrayList<>();
-        for (Map.Entry<String, Object> entry : getEntries(word)) {
+        for (final Map.Entry<String, Object> entry : getEntries(word)) {
             addEntry(result, entry);
         }
         return result;
@@ -195,8 +189,8 @@ public class MDictDictionary {
         for (Map.Entry<String, Object> entry: getEntries(path)) {
             if (entry.getKey().equals(path)) {
                 Object value = entry.getValue();
-                if (value instanceof Long) {
-                    return getData((Long) value);
+                if (value instanceof DictionaryDataOffset) {
+                    return getData((DictionaryDataOffset) value);
                 }
             }
         }
@@ -207,12 +201,27 @@ public class MDictDictionary {
         return dictionaryData.lookUp(word);
     }
 
+    public List<String> getEntryKeys(final int page, final int size) {
+        return dictionaryData.getEntryKeys(page, size);
+    }
+
     public List<Map.Entry<String, Object>> getEntriesPredictive(final String word) {
         return dictionaryData.lookUpPredictive(word);
     }
 
-    public byte[] getData(final Long offset) throws MDException {
-        int index = recordIndex.searchOffsetIndex(offset);
+    private byte[] getData(final int index, final Long offset) throws MDException {
+        int pos = (int) (offset - recordIndex.getRecordOffsetDecomp(index));
+        long decompSize = recordIndex.getRecordDecompSize(index);
+        int dataSize;
+        if (recordIndex.getRecordNumEntries() - 1 > index) {
+            dataSize = (int) (recordIndex.getRecordOffsetDecomp(index + 1) - offset);
+        } else {
+            dataSize = (int) (decompSize - pos);
+        }
+        return getData(index, offset, dataSize);
+    }
+
+    private byte[] getData(final int index, final Long offset, final long dataSize) throws MDException {
         int pos = (int) (offset - recordIndex.getRecordOffsetDecomp(index));
         try {
             mdInputStream.seek(recordIndex.getCompOffset(index));
@@ -221,61 +230,48 @@ public class MDictDictionary {
         }
         long compSize = recordIndex.getRecordCompSize(index);
         long decompSize = recordIndex.getRecordDecompSize(index);
-        int dataSize;
-        if (recordIndex.getRecordNumEntries() - 1 > index) {
-            dataSize = (int) (recordIndex.getRecordOffsetDecomp(index + 1) - offset);
-        } else {
-            dataSize = (int) (decompSize - pos);
-        }
         try {
-            byte[] result = new byte[dataSize];
+            byte[] result = new byte[(int) dataSize];
             byte[] buf = MDictUtils.decompressBuf(mdInputStream, compSize, decompSize, false);
-            System.arraycopy(buf, pos, result, 0, dataSize);
+            System.arraycopy(buf, pos, result, 0, (int) dataSize);
             return result;
         } catch (DataFormatException | IOException e) {
             throw new MDException("Decompressed data seems incorrect.");
         }
     }
 
-    public String getText(final Long offset) throws MDException {
+    public byte[] getData(final DictionaryDataOffset offset) throws MDException {
+        int index = recordIndex.searchOffsetIndex(offset.offset);
+        if (offset.dataSize == -1) {
+            return getData(index, offset.offset);
+        } else {
+            return getData(index, offset.offset, offset.dataSize);
+        }
+    }
+
+    public String getText(final DictionaryDataOffset offset) throws MDException {
         if (!mdx) {
             throw new MDException("Can not retrieve text data from MDD file.");
         }
-        String result;
-        // calculate block index and seek it
-        int index = recordIndex.searchOffsetIndex(offset);
-        long skipSize = offset - recordIndex.getRecordOffsetDecomp(index);
         try {
-            mdInputStream.seek(recordIndex.getCompOffset(index));
-        } catch (IOException e) {
-            throw new MDException("IO error.", e);
-        }
-        long compSize = recordIndex.getRecordCompSize(index);
-        long decompSize = recordIndex.getRecordDecompSize(index);
-        try (MDInputStream decompressedStream = MDictUtils.decompress(mdInputStream, compSize, decompSize, false)) {
-            long moved = decompressedStream.skip(skipSize);
-            if (moved != skipSize) {
-                throw new MDException("Decompressed data seems incorrect.");
-            }
-            try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(decompressedStream, encoding),
-                    (int) decompSize)) {
-                result = bufferedReader.readLine();
-                return result;
-            }
-        } catch (DataFormatException | IOException e) {
+            byte[] bytes = getData(offset);
+            return new String(bytes);
+        } catch (Exception e) {
             throw new MDException("data decompression error.", e);
         }
     }
 
     private void addEntry(final List<Map.Entry<String, String>> result, final Map.Entry<String, Object> entry) {
-        if (entry.getValue() instanceof Long) {
-            result.add(new AbstractMap.SimpleEntry<>(entry.getKey(), textCache.get((Long) entry.getValue())));
+
+        if (entry.getValue() instanceof DictionaryDataOffset) {
+            result.add(new AbstractMap.SimpleEntry<>(entry.getKey(), textCache.get((DictionaryDataOffset) entry.getValue())));
         } else {
-            Long[] values = (Long[]) entry.getValue();
-            for (Long value : values) {
-                result.add(new AbstractMap.SimpleEntry<>(entry.getKey(), textCache.get(value)));
+            DictionaryDataOffset[] offsets = (DictionaryDataOffset[]) entry.getValue();
+            for (final DictionaryDataOffset offset : offsets) {
+                result.add(new AbstractMap.SimpleEntry<>(entry.getKey(), textCache.get(offset)));
             }
         }
+
     }
 
     private static String getBaseName(final String path) {

@@ -64,8 +64,8 @@ class MDictProprietaryTest {
         String word = entry.getKey();
         assertEquals("/audio/test.mp3", word);
         Object value = entry.getValue();
-        assertTrue(value instanceof Long);
-        byte[] buf = dictData.getData((Long) value);
+        assertTrue(value instanceof DictionaryDataOffset);
+        byte[] buf = dictData.getData((DictionaryDataOffset) value);
         Tika tika = new Tika();
         String mediaType = tika.detect(buf);
         assertEquals("audio/mpeg", mediaType);

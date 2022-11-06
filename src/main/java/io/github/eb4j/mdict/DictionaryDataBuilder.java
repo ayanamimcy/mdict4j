@@ -21,6 +21,9 @@ package io.github.eb4j.mdict;
 import org.trie4j.MapTrie;
 import org.trie4j.patricia.MapPatriciaTrie;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Builder class for DictionaryData POJO.
  * @author Hiroshi Miura
@@ -30,6 +33,8 @@ import org.trie4j.patricia.MapPatriciaTrie;
 public final class DictionaryDataBuilder<T> {
 
     private final MapTrie<Object> temp = new MapPatriciaTrie<>();
+
+    private final List<String> entryKeys = new ArrayList<>();
 
     /**
      * Builder factory for POJO class DictionaryData.
@@ -42,7 +47,7 @@ public final class DictionaryDataBuilder<T> {
      * @return DictionaryData immutable object.
      */
     public DictionaryData<T> build() {
-        return new DictionaryData<>(temp);
+        return new DictionaryData<>(temp, entryKeys);
     }
 
     /**
@@ -59,6 +64,7 @@ public final class DictionaryDataBuilder<T> {
         Object stored = temp.get(key);
         if (stored == null) {
             temp.insert(key, value);
+            entryKeys.add(key);
         } else {
             if (stored instanceof Object[]) {
                 stored = extendArray((Object[]) stored, value);

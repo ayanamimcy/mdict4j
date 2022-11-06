@@ -19,6 +19,7 @@
 package io.github.eb4j.mdict;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 
@@ -29,6 +30,7 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
  * @author Hiroshi Miura
  */
 @JacksonXmlRootElement(localName = "Dictionary")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public final class MDictDictionaryInfo {
     @JacksonXmlProperty(localName = "GeneratedByEngineVersion", isAttribute = true)
     private String generatedByEngineVersion;
@@ -109,8 +111,14 @@ public final class MDictDictionaryInfo {
         this.stripKey = stripKey;
     }
 
-    public String getEncrypted() {
-        return encrypted;
+    public int getEncrypted() {
+        if ("".equals(encrypted) || "No".equals(encrypted)) {
+            return 0;
+        } else if ("Yes".equals(encrypted)) {
+            return 1;
+        } else {
+            return Integer.parseInt(encrypted);
+        }
     }
 
     public void setEncrypted(final String encrypted) {

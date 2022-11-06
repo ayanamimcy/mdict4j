@@ -45,9 +45,8 @@ class MDictDictionaryTest {
         assertEquals("2021-11-11", dictionary.getCreationDate());
         assertEquals("EJDIC", dictionary.getTitle());
         assertEquals("\"UTF-8\" encoding.", dictionary.getDescription());
-        Map.Entry<String, Object> entry = dictionary.getEntries("Z").get(0);
-        Object value = entry.getValue();
-        String text = dictionary.getText((Long) value);
+        List<Map.Entry<String, Object>> entries = dictionary.getEntries("Z");
+        String text = dictionary.getText((DictionaryDataOffset) entries.get(0).getValue());
         assertNotNull(text);
         Map.Entry<String, String> result = dictionary.readArticles("Z").get(0);
         assertEquals("Z", result.getKey());
@@ -69,11 +68,10 @@ class MDictDictionaryTest {
                         " 2 <font color=#990066><I>( )</I></font><br>" +
                         " 3    4 <br>  5 <br><font color=#666666><I> </I></font> ",
                 dictionary.getStyleSheet());
-        Map.Entry<String, Object> entry = dictionary.getEntries("test").get(0);
-        String word = entry.getKey();
+        List<Map.Entry<String, Object>> entries = dictionary.getEntries("test");
+        String word = entries.get(0).getKey();
         assertNotNull(word);
-        Object value = entry.getValue();
-        String text = dictionary.getText((Long) value);
+        String text = dictionary.getText((DictionaryDataOffset) entries.get(0).getValue());
         assertNotNull(text);
         Map.Entry<String, String> result = dictionary.readArticles("test").get(0);
         assertEquals(text, result.getValue());
@@ -100,16 +98,16 @@ class MDictDictionaryTest {
             throws MDException {
         String key;
         String value;
-        if (entry.getValue() instanceof Long) {
+        if (entry.getValue() instanceof DictionaryDataOffset) {
             key = entry.getKey();
-            value = cleaHtmlArticle(mdictionary.getText((Long) entry.getValue()));
+            value = cleaHtmlArticle(mdictionary.getText((DictionaryDataOffset)entry.getValue()));
             assertNotNull(key);
             assertNotNull(value);
         } else {
-            Long[] values = (Long[]) entry.getValue();
-            for (final Long aLong : values) {
+            DictionaryDataOffset[] values = (DictionaryDataOffset[]) entry.getValue();
+            for (final DictionaryDataOffset offset : values) {
                 key = entry.getKey();
-                value = cleaHtmlArticle(mdictionary.getText(aLong));
+                value = cleaHtmlArticle(mdictionary.getText(offset));
                 assertNotNull(key);
                 assertNotNull(value);
             }
