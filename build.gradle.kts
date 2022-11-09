@@ -2,6 +2,7 @@ import java.io.FileInputStream
 import java.util.Properties
 
 plugins {
+    java
     checkstyle
     jacoco
     signing
@@ -9,7 +10,7 @@ plugins {
     `java-library-distribution`
     `maven-publish`
     kotlin("jvm") version "1.7.0"
-    id("com.github.spotbugs") version "5.0.9"
+//    id("com.github.spotbugs") version "5.0.9"
     id("com.diffplug.spotless") version "6.7.2"
     id("com.github.kt3k.coveralls") version "2.12.0"
     id("io.github.gradle-nexus.publish-plugin") version "1.1.0"
@@ -171,8 +172,21 @@ tasks.register("writeVersionFile") {
     versionProperties.appendText("version=" + project.version)
 }
 
+tasks.register<Jar>("uberJar") {
+    archiveClassifier.set("uber")
+
+    from(sourceSets.main.get().output)
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    dependsOn(configurations.runtimeClasspath)
+    exclude("META-INF/*.RSA", "META-INF/*.SF", "META-INF/*.DSA", "META-INF/MANIFEST.MF")
+    from({
+        configurations.runtimeClasspath.get().filter { it.name.endsWith("jar") }.map { zipTree(it) }
+    })
+}
+
 tasks.getByName("jar") {
-    dependsOn("writeVersionFile")
+    dependsOn("writeVersionFile", "uberJar")
+
 }
 
 tasks.sphinx {

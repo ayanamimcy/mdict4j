@@ -67,9 +67,6 @@ public final class RecordIndex {
             throw new MDException("Wrong search index!!");
         }
 
-        int binarySearch = Arrays.binarySearch(recordOffsetDecomp, off);
-        System.out.println(binarySearch);
-
         do {
             int middle = (start + end) / 2;
             if (middle == recordOffsetDecomp.length - 1) {
